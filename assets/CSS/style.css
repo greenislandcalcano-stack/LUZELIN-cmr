@@ -1,1 +1,167 @@
+* {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f1ea;
+  color: #2b2b2b;
+}
+
+.crm-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.crm-sidebar {
+  width: 260px;
+  background: #1f3b24;
+  color: white;
+  padding: 24px 18px;
+}
+
+.logo h3 {
+  margin-bottom: 4px;
+  font-weight: 800;
+}
+
+.logo small {
+  color: #d7e8d2;
+}
+
+.crm-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.crm-nav a {
+  color: #eaf5e8;
+  text-decoration: none;
+  padding: 13px 15px;
+  border-radius: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.crm-nav a:hover,
+.crm-nav a.active {
+  background: #b71c1c;
+  color: white;
+}
+
+.crm-main {
+  flex: 1;
+  padding: 24px;
+}
+
+.crm-header {
+  background: white;
+  border-radius: 18px;
+  padding: 18px 22px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.crm-header h2 {
+  margin: 0;
+  font-weight: 800;
+  color: #1f3b24;
+}
+
+.crm-card {
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.stat-card {
+  background: white;
+  border-left: 6px solid #b71c1c;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.stat-card h4 {
+  margin: 0;
+  color: #777;
+  font-size: 15px;
+}
+
+.stat-card strong {
+  font-size: 32px;
+  color: #1f3b24;
+}
+
+.table-card {
+  border: 2px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: center;
+  background: #fff;
+}
+
+.table-card.available {
+  border-color: #198754;
+}
+
+.table-card.busy {
+  border-color: #b71c1c;
+  background: #fff3f3;
+}
+
+.order-status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.status-new {
+  background: #fff3cd;
+  color: #7a5a00;
+}
+
+.status-ready {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+
+.status-paid {
+  background: #e2e3e5;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .crm-shell {
+    flex-direction: column;
+  }
+
+  .crm-sidebar {
+    width: 100%;
+  }
+
+  .stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .crm-header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+}
