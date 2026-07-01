@@ -4,7 +4,7 @@ const navLinks = document.querySelectorAll(".crm-nav a");
 
 async function loadPage(page) {
   try {
-    const response = await fetch(`pages/${page}.html`);
+    const response = await fetch(`assets/pages/${page}.html`);
 
     if (!response.ok) {
       throw new Error("Page not found");
