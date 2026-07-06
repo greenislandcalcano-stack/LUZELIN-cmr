@@ -1,0 +1,149 @@
+<div class="crm-card">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="mb-1">🍕 Menu Management</h2>
+            <p class="text-muted mb-0">
+                Manage pizzas, drinks and extras.
+            </p>
+        </div>
+
+        <button class="btn btn-success">
+            <i class="bi bi-plus-circle"></i>
+            Add Product
+        </button>
+
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Pizza -->
+
+        <div class="col-lg-4">
+
+            <div class="card h-100 shadow-sm">
+
+                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600"
+                     class="card-img-top"
+                     style="height:220px;object-fit:cover;">
+
+                <div class="card-body">
+
+                    <h4>Rincón Tropical</h4>
+
+                    <p class="text-muted">
+                        Ham, bacon, vegetables & mozzarella.
+                    </p>
+
+                    <table class="table table-sm">
+
+                        <tr>
+                            <td>4"</td>
+                            <td>RD$300</td>
+                        </tr>
+
+                        <tr>
+                            <td>6"</td>
+                            <td>RD$450</td>
+                        </tr>
+
+                        <tr>
+                            <td>8"</td>
+                            <td>RD$650</td>
+                        </tr>
+
+                        <tr>
+                            <td>12"</td>
+                            <td>RD$900</td>
+                        </tr>
+
+                    </table>
+
+                    <button class="btn btn-success w-100">
+                        Edit Product
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Pepperoni -->
+
+        <div class="col-lg-4">
+
+            <div class="card h-100 shadow-sm">
+
+                <img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?w=600"
+                     class="card-img-top"
+                     style="height:220px;object-fit:cover;">
+
+                <div class="card-body">
+
+                    <h4>Pepperoni</h4>
+
+                    <p class="text-muted">
+                        Classic pepperoni pizza.
+                    </p>
+
+                    <table class="table table-sm">
+
+                        <tr><td>4"</td><td>RD$250</td></tr>
+                        <tr><td>6"</td><td>RD$400</td></tr>
+                        <tr><td>8"</td><td>RD$575</td></tr>
+                        <tr><td>12"</td><td>RD$825</td></tr>
+
+                    </table>
+
+                    <button class="btn btn-success w-100">
+                        Edit Product
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Shrimp -->
+
+        <div class="col-lg-4">
+
+            <div class="card h-100 shadow-sm">
+
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"
+                     class="card-img-top"
+                     style="height:220px;object-fit:cover;">
+
+                <div class="card-body">
+
+                    <h4>Shrimp Pizza</h4>
+
+                    <p class="text-muted">
+                        Fresh shrimp & mozzarella.
+                    </p>
+
+                    <table class="table table-sm">
+
+                        <tr><td>4"</td><td>RD$400</td></tr>
+                        <tr><td>6"</td><td>RD$575</td></tr>
+                        <tr><td>8"</td><td>RD$850</td></tr>
+                        <tr><td>12"</td><td>RD$1100</td></tr>
+
+                    </table>
+
+                    <button class="btn btn-success w-100">
+                        Edit Product
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
