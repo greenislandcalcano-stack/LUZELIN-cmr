@@ -1,149 +1,276 @@
 <div class="crm-card">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-
-        <div>
-            <h2 class="mb-1">🍕 Menu Management</h2>
-            <p class="text-muted mb-0">
-                Manage pizzas, drinks and extras.
-            </p>
-        </div>
-
-        <button class="btn btn-success">
-            <i class="bi bi-plus-circle"></i>
-            Add Product
-        </button>
-
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2>🍽️ Menu Management</h2>
+      <p class="text-muted mb-0">Manage kitchen items, drinks, desserts and add-ups.</p>
     </div>
 
-    <div class="row g-4">
+    <button class="btn btn-success">
+      <i class="bi bi-plus-circle"></i> Add Product
+    </button>
+  </div>
 
-        <!-- Pizza -->
+  <!-- Categories -->
+  <div class="d-flex flex-wrap gap-2 mb-4">
+    <button class="btn btn-success">All</button>
+    <button class="btn btn-outline-success">Muelle Viejo</button>
+    <button class="btn btn-outline-success">Pescador</button>
+    <button class="btn btn-outline-success">Los Rieles</button>
+    <button class="btn btn-outline-success">Bebidas</button>
+    <button class="btn btn-outline-success">Postres</button>
+    <button class="btn btn-outline-success">Add-Ups</button>
+  </div>
 
-        <div class="col-lg-4">
+  <!-- MUELLE VIEJO -->
+  <h4 class="fw-bold mt-4 mb-3">⚓ Muelle Viejo Mariscos</h4>
 
-            <div class="card h-100 shadow-sm">
+  <div class="row g-3">
 
-                <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600"
-                     class="card-img-top"
-                     style="height:220px;object-fit:cover;">
-
-                <div class="card-body">
-
-                    <h4>Rincón Tropical</h4>
-
-                    <p class="text-muted">
-                        Ham, bacon, vegetables & mozzarella.
-                    </p>
-
-                    <table class="table table-sm">
-
-                        <tr>
-                            <td>4"</td>
-                            <td>RD$300</td>
-                        </tr>
-
-                        <tr>
-                            <td>6"</td>
-                            <td>RD$450</td>
-                        </tr>
-
-                        <tr>
-                            <td>8"</td>
-                            <td>RD$650</td>
-                        </tr>
-
-                        <tr>
-                            <td>12"</td>
-                            <td>RD$900</td>
-                        </tr>
-
-                    </table>
-
-                    <button class="btn btn-success w-100">
-                        Edit Product
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- Pepperoni -->
-
-        <div class="col-lg-4">
-
-            <div class="card h-100 shadow-sm">
-
-                <img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?w=600"
-                     class="card-img-top"
-                     style="height:220px;object-fit:cover;">
-
-                <div class="card-body">
-
-                    <h4>Pepperoni</h4>
-
-                    <p class="text-muted">
-                        Classic pepperoni pizza.
-                    </p>
-
-                    <table class="table table-sm">
-
-                        <tr><td>4"</td><td>RD$250</td></tr>
-                        <tr><td>6"</td><td>RD$400</td></tr>
-                        <tr><td>8"</td><td>RD$575</td></tr>
-                        <tr><td>12"</td><td>RD$825</td></tr>
-
-                    </table>
-
-                    <button class="btn btn-success w-100">
-                        Edit Product
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- Shrimp -->
-
-        <div class="col-lg-4">
-
-            <div class="card h-100 shadow-sm">
-
-                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"
-                     class="card-img-top"
-                     style="height:220px;object-fit:cover;">
-
-                <div class="card-body">
-
-                    <h4>Shrimp Pizza</h4>
-
-                    <p class="text-muted">
-                        Fresh shrimp & mozzarella.
-                    </p>
-
-                    <table class="table table-sm">
-
-                        <tr><td>4"</td><td>RD$400</td></tr>
-                        <tr><td>6"</td><td>RD$575</td></tr>
-                        <tr><td>8"</td><td>RD$850</td></tr>
-                        <tr><td>12"</td><td>RD$1100</td></tr>
-
-                    </table>
-
-                    <button class="btn btn-success w-100">
-                        Edit Product
-                    </button>
-
-                </div>
-
-            </div>
-
-        </div>
-
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Camarones</h5>
+        <p>A elegir: al ajillo, a la criolla, fritos o a la plancha.</p>
+        <strong>RD$675</strong>
+      </div>
     </div>
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Lambi / Caracol</h5>
+        <p>A elegir: al ajillo, a la criolla, frito o guisado.</p>
+        <strong>RD$875</strong>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Pulpo</h5>
+        <p>A elegir: al ajillo, a la criolla o guisado.</p>
+        <strong>RD$995</strong>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Masa de Cangrejo</h5>
+        <p>Preparada al estilo de la casa.</p>
+        <strong>RD$795</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PESCADOR -->
+  <h4 class="fw-bold mt-5 mb-3">🐟 Pescador</h4>
+
+  <div class="row g-3">
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Chillo</h5>
+        <p>A elegir: al ajillo, al vapor, frito o criollo.</p>
+        <strong>RD$875</strong>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Mero</h5>
+        <p>A elegir: al ajillo, al vapor, frito o criollo.</p>
+        <strong>RD$675</strong>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Pargo</h5>
+        <p>Precio según disponibilidad y peso.</p>
+        <strong>RD$895</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- LOS RIELES -->
+  <h4 class="fw-bold mt-5 mb-3">🚂 Los Rieles / Parrilla</h4>
+
+  <div class="row g-3">
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Pollo a la Parrilla</h5>
+        <p>Pollo acompañado de guarnición.</p>
+        <strong>RD$495</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BEBIDAS -->
+  <h4 class="fw-bold mt-5 mb-3">🥤 Bebidas Naturales</h4>
+
+  <div class="row g-3">
+
+    <div class="col-md-3">
+      <div class="menu-item-card">
+        <h5>Chinola</h5>
+        <strong>RD$150</strong>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="menu-item-card">
+        <h5>Limón</h5>
+        <strong>RD$150</strong>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="menu-item-card">
+        <h5>Naranja</h5>
+        <strong>RD$150</strong>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="menu-item-card">
+        <h5>Fresa</h5>
+        <strong>RD$150</strong>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="menu-item-card">
+        <h5>Tamarindo</h5>
+        <strong>RD$150</strong>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="menu-item-card">
+        <h5>Avena</h5>
+        <strong>RD$150</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <h4 class="fw-bold mt-5 mb-3">🍹 Tragos de la Casa</h4>
+
+  <div class="row g-3">
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Beso de Sirena</h5>
+        <strong>RD$275</strong>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Beso de Amor</h5>
+        <strong>RD$275</strong>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Blue Horizon</h5>
+        <strong>RD$275</strong>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Muchachita de Montserrat</h5>
+        <strong>RD$275</strong>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Coquito Especial</h5>
+        <strong>RD$275</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <h4 class="fw-bold mt-5 mb-3">🍺 Cervezas</h4>
+
+  <div class="row g-3">
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Presidente</h5>
+        <strong>RD$250</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- POSTRES -->
+  <h4 class="fw-bold mt-5 mb-3">🍰 Postres Caseros</h4>
+
+  <div class="row g-3">
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Flan</h5>
+        <strong>RD$175</strong>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Dulce de Coco</h5>
+        <strong>RD$175</strong>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="menu-item-card">
+        <h5>Tres Leches</h5>
+        <strong>RD$175</strong>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ADD UPS -->
+  <h4 class="fw-bold mt-5 mb-3">➕ Add-Ups / Extras</h4>
+
+  <div class="row g-3">
+
+    <div class="col-md-3">
+      <div class="menu-item-card">
+        <h5>Tostones</h5>
+        <strong>RD$150</strong>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="menu-item-card">
+        <h5>Papas Fritas</h5>
+        <strong>RD$150</strong>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="menu-item-card">
+        <h5>Arroz Blanco</h5>
+        <strong>RD$150</strong>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="menu-item-card">
+        <h5>Ensalada</h5>
+        <strong>RD$150</strong>
+      </div>
+    </div>
+
+  </div>
 
 </div>
