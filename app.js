@@ -9,6 +9,11 @@ const navLinks = document.querySelectorAll(".crm-nav a");
 async function loadPage(page) {
   try {
    if (page === "dashboard") {
+    alert("Dashboard dinámico");
+    pageTitle.textContent = "Dashboard";
+    renderDashboardPage();
+    return;
+}
   pageTitle.textContent = "Dashboard";
   renderDashboardPage();
   return;
