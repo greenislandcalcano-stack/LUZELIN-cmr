@@ -1,64 +1,144 @@
 <div class="crm-card">
 
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-      <h2 class="mb-1">🧾 Orders</h2>
-      <p class="text-muted mb-0">Create and manage restaurant orders.</p>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                🧾 Orders
+            </h2>
+
+            <p class="text-muted mb-0">
+                Create, view and manage restaurant orders.
+            </p>
+        </div>
+
+        <button class="btn btn-success"
+            onclick="loadPage('menu')">
+
+            <i class="bi bi-plus-circle"></i>
+            New Order
+
+        </button>
+
     </div>
 
-    <button class="btn btn-success">
-      + New Order
-    </button>
-  </div>
+    <div class="table-responsive">
 
-  <table class="table align-middle">
+        <table class="table align-middle">
 
-    <thead>
-      <tr>
-        <th>Order #</th>
-        <th>Type</th>
-        <th>Table</th>
-        <th>Customer</th>
-        <th>Total</th>
-        <th>Status</th>
-        <th>Action</th>
-      </tr>
-    </thead>
+            <thead>
 
-    <tbody>
+                <tr>
+                    <th>Order #</th>
+                    <th>Type</th>
+                    <th>Table</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
 
-      <tr>
-        <td>ORD-001</td>
-        <td>Dine-In</td>
-        <td>Table 2</td>
-        <td>Walk In</td>
-        <td>RD$1,250</td>
-        <td><span class="order-status status-new">Preparing</span></td>
-        <td><button class="btn btn-sm btn-outline-primary">View</button></td>
-      </tr>
+            </thead>
 
-      <tr>
-        <td>ORD-002</td>
-        <td>Takeout</td>
-        <td>-</td>
-        <td>María</td>
-        <td>RD$850</td>
-        <td><span class="order-status status-ready">Ready</span></td>
-        <td><button class="btn btn-sm btn-outline-primary">View</button></td>
-      </tr>
+            <tbody>
 
-      <tr>
-        <td>ORD-003</td>
-        <td>Delivery</td>
-        <td>-</td>
-        <td>Carlos</td>
-        <td>RD$1,100</td>
-        <td><span class="order-status status-paid">Paid</span></td>
-        <td><button class="btn btn-sm btn-outline-primary">View</button></td>
-      </tr>
+                <tr>
 
-    </tbody>
+                    <td>
+                        <strong>ORD-001</strong>
+                    </td>
 
-  </table>
+                    <td>Dine-In</td>
+
+                    <td>Table 2</td>
+
+                    <td>Walk In</td>
+
+                    <td>
+                        <strong>RD$1,250</strong>
+                    </td>
+
+                    <td>
+                        <span class="badge bg-warning text-dark">
+                            Preparing
+                        </span>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm"
+                            onclick="loadPage('sales')">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <strong>ORD-002</strong>
+                    </td>
+
+                    <td>Takeout</td>
+
+                    <td>-</td>
+
+                    <td>María</td>
+
+                    <td>
+                        <strong>RD$850</strong>
+                    </td>
+
+                    <td>
+                        <span class="badge bg-success">
+                            Ready
+                        </span>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm"
+                            onclick="loadPage('sales')">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+                        <strong>ORD-003</strong>
+                    </td>
+
+                    <td>Delivery</td>
+
+                    <td>-</td>
+
+                    <td>Carlos</td>
+
+                    <td>
+                        <strong>RD$1,100</strong>
+                    </td>
+
+                    <td>
+                        <span class="badge bg-secondary">
+                            Paid
+                        </span>
+                    </td>
+
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm"
+                            onclick="loadPage('sales')">
+                            View
+                        </button>
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
 
 </div>
