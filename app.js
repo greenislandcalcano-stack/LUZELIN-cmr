@@ -13,7 +13,12 @@ async function loadPage(page) {
     const html = await response.text();
     appContent.innerHTML = html;
     pageTitle.textContent = page.charAt(0).toUpperCase() + page.slice(1);
-
+document.querySelectorAll(".page-btn").forEach(button => {
+    button.addEventListener("click", function () {
+        const targetPage = this.getAttribute("data-page");
+        loadPage(targetPage);
+    });
+});
     if (page === "sales") initSales();
 
   } catch (error) {
