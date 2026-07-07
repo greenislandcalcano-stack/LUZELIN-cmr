@@ -9,10 +9,16 @@ const navLinks = document.querySelectorAll(".crm-nav a");
 async function loadPage(page) {
   try {
     if (page === "tables") {
-      pageTitle.textContent = "Tables";
-      renderTablesPage();
-      return;
-    }
+  pageTitle.textContent = "Tables";
+  renderTablesPage();
+  return;
+}
+
+if (page === "orders") {
+  pageTitle.textContent = "Orders";
+  renderOrdersPage();
+  return;
+}
 
     const response = await fetch(`assets/pages/${page}.html`);
 
@@ -513,4 +519,122 @@ function clearSalesHistory() {
 
   localStorage.removeItem("sales");
   renderSales();
+}
+function renderOrdersPage() {
+  const sales = JSON.parse(localStorage.getItem("sales")) || [];
+  const tableOrders = JSON.parse(localStorage.getItem("tableOrders")) || {};
+  const takeoutOrder = JSON.parse(localStorage.getItem("takeoutOrder")) || [];
+
+  let openOrders = [];
+
+  Object.keys(tableOrders).forEach(tableId => {
+    const order = tableOrders[tableId];
+
+    if (order.items && order.items.length > 0) {
+      const subtotal = order.items.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const itbis = subtotal * 0.18;
+      const service = subtotal * 0.10;
+      const total = subtotal + itbis + service;
+
+      openOrders.push({
+        order: "OPEN-" + tableId.replace("table-", "").padStart(3, "0"),
+        type: "Dine-In",
+        table: tableId.replace("table-", "Table "),
+        customer: "Walk In",
+        total,
+        status: "Preparing"
+      });
+    }
+  });
+
+  if (takeoutOrder.length > 0) {
+    const subtotal = takeoutOrder.reduce((sum, item) => sum + item.price * item.qty, 0);
+    const itbis = subtotal * 0.18;
+    const service = subtotal * 0.10;
+    const total = subtotal + itbis + service;
+
+    openOrders.push({
+      order: "OPEN-TK",
+      type: "Takeout",
+      table: "-",
+      customer: "Walk In",
+      total,
+      status: "Preparing"
+    });
+  }
+
+  appContent.innerHTML = `
+    <div class="crm-card">
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="fw-bold mb-1">🧾 Orders</h2>
+          <p class="text-muted mb-0">Órdenes abiertas del restaurante.</p>
+        </div>
+
+        <button class="btn btn-success" onclick="startTakeoutOrder()">
+          <i class="bi bi-plus-circle"></i>
+          New Order
+        </button>
+      </div>
+
+      ${
+        openOrders.length === 0
+          ? `
+            <div class="alert alert-info mb-0">
+              No hay órdenes abiertas ahora mismo.
+            </div>
+          `
+          : `
+            <div class="table-responsive">
+              <table class="table align-middle">
+                <thead>
+                  <tr>
+                    <th>Order #</th>
+                    <th>Type</th>
+                    <th>Table</th>
+                    <th>Customer</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  ${openOrders.map(order => `
+                    <tr>
+                      <td><strong>${order.order}</strong></td>
+                      <td>${order.type}</td>
+                      <td>${order.table}</td>
+                      <td>${order.customer}</td>
+                      <td><strong>RD$${order.total.toLocaleString()}</strong></td>
+                      <td>
+                        <span class="badge bg-warning text-dark">${order.status}</span>
+                      </td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="openOrderFromList('${order.table}')">
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          `
+      }
+
+    </div>
+  `;
+}
+
+function openOrderFromList(tableName) {
+  if (tableName === "-") {
+    startTakeoutOrder();
+    return;
+  }
+
+  const tableId = tableName.toLowerCase().replace(" ", "-");
+
+  openTableOrder(tableId);
 }
