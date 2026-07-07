@@ -1,54 +1,117 @@
 <div class="crm-card">
 
-    <h2 class="mb-4">
-        🍕 Restaurant Overview
-    </h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div class="stat-grid">
-
-        <div class="stat-card">
-            <h4>Open Tables</h4>
-            <strong id="openTables">12</strong>
+        <div>
+            <h2 class="fw-bold mb-1">
+                🍕 Restaurant Dashboard
+            </h2>
+            <p class="text-muted mb-0">
+                Welcome back. Here's today's restaurant activity.
+            </p>
         </div>
 
-        <div class="stat-card">
-            <h4>Occupied Tables</h4>
-            <strong id="busyTables">4</strong>
+        <button class="btn btn-success btn-lg shadow-sm"
+            onclick="loadPage('menu')">
+            <i class="bi bi-plus-circle"></i>
+            New Order
+        </button>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+
+            <div class="stat-card h-100">
+
+                <small class="text-muted">Open Tables</small>
+
+                <h1 class="fw-bold mt-2 mb-0" id="openTables">
+                    12
+                </h1>
+
+            </div>
+
         </div>
 
-        <div class="stat-card">
-            <h4>Today's Orders</h4>
-            <strong id="todayOrders">23</strong>
+        <div class="col-md-3">
+
+            <div class="stat-card h-100">
+
+                <small class="text-muted">Occupied Tables</small>
+
+                <h1 class="fw-bold mt-2 mb-0" id="busyTables">
+                    4
+                </h1>
+
+            </div>
+
         </div>
 
-        <div class="stat-card">
-            <h4>Today's Sales</h4>
-            <strong id="todaySales">RD$18,540</strong>
+        <div class="col-md-3">
+
+            <div class="stat-card h-100">
+
+                <small class="text-muted">Today's Orders</small>
+
+                <h1 class="fw-bold mt-2 mb-0" id="todayOrders">
+                    23
+                </h1>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="stat-card h-100">
+
+                <small class="text-muted">Today's Sales</small>
+
+                <h1 class="fw-bold text-success mt-2 mb-0"
+                    id="todaySales">
+
+                    RD$18,540
+
+                </h1>
+
+            </div>
+
         </div>
 
     </div>
 
 </div>
 
-<br>
+<div class="row mt-4">
 
-<div class="row">
-
-    <div class="col-lg-7">
+    <div class="col-lg-8">
 
         <div class="crm-card">
 
-            <h4 class="mb-4">
-                Recent Orders
-            </h4>
+            <div class="d-flex justify-content-between align-items-center mb-4">
 
-            <table class="table">
+                <h4 class="fw-bold mb-0">
+                    Recent Orders
+                </h4>
+
+                <button class="btn btn-outline-success btn-sm"
+                    onclick="loadPage('sales')">
+
+                    View All
+
+                </button>
+
+            </div>
+
+            <table class="table align-middle">
 
                 <thead>
 
                     <tr>
 
-                        <th>#</th>
+                        <th>Ticket</th>
                         <th>Table</th>
                         <th>Customer</th>
                         <th>Total</th>
@@ -62,42 +125,57 @@
 
                     <tr>
 
-                        <td>001</td>
+                        <td><strong>001</strong></td>
                         <td>4</td>
                         <td>Walk In</td>
-                        <td>RD$1,250</td>
+                        <td><strong>RD$1,250</strong></td>
+
                         <td>
-                            <span class="order-status status-new">
+
+                            <span class="badge bg-warning text-dark">
+
                                 Preparing
+
                             </span>
+
                         </td>
 
                     </tr>
 
                     <tr>
 
-                        <td>002</td>
+                        <td><strong>002</strong></td>
                         <td>2</td>
                         <td>Juan Pérez</td>
-                        <td>RD$870</td>
+                        <td><strong>RD$870</strong></td>
+
                         <td>
-                            <span class="order-status status-ready">
+
+                            <span class="badge bg-info">
+
                                 Ready
+
                             </span>
+
                         </td>
 
                     </tr>
 
                     <tr>
 
-                        <td>003</td>
+                        <td><strong>003</strong></td>
                         <td>Take Out</td>
                         <td>María</td>
-                        <td>RD$650</td>
+                        <td><strong>RD$650</strong></td>
+
                         <td>
-                            <span class="order-status status-paid">
+
+                            <span class="badge bg-success">
+
                                 Paid
+
                             </span>
+
                         </td>
 
                     </tr>
@@ -110,30 +188,68 @@
 
     </div>
 
-    <div class="col-lg-5">
+    <div class="col-lg-4">
 
         <div class="crm-card">
 
-            <h4 class="mb-4">
+            <h4 class="fw-bold mb-4">
                 Quick Actions
             </h4>
 
             <div class="d-grid gap-3">
 
-                <button class="btn btn-success btn-lg">
-                    🍽️ New Order
+                <button class="btn btn-success btn-lg"
+                    onclick="loadPage('menu')">
+
+                    <i class="bi bi-plus-circle"></i>
+
+                    New Order
+
                 </button>
 
-                <button class="btn btn-warning btn-lg">
-                    🪑 Manage Tables
+                <button class="btn btn-warning btn-lg"
+                    onclick="loadPage('tables')">
+
+                    <i class="bi bi-grid-3x3-gap"></i>
+
+                    Manage Tables
+
                 </button>
 
-                <button class="btn btn-primary btn-lg">
-                    🍕 View Menu
+                <button class="btn btn-primary btn-lg"
+                    onclick="loadPage('menu')">
+
+                    <i class="bi bi-journal-text"></i>
+
+                    POS / Menu
+
                 </button>
 
-                <button class="btn btn-danger btn-lg">
-                    📈 Today's Sales
+                <button class="btn btn-danger btn-lg"
+                    onclick="loadPage('sales')">
+
+                    <i class="bi bi-graph-up-arrow"></i>
+
+                    Sales History
+
+                </button>
+
+                <button class="btn btn-dark btn-lg"
+                    onclick="loadPage('customers')">
+
+                    <i class="bi bi-people-fill"></i>
+
+                    Customers
+
+                </button>
+
+                <button class="btn btn-secondary btn-lg"
+                    onclick="loadPage('settings')">
+
+                    <i class="bi bi-gear-fill"></i>
+
+                    Settings
+
                 </button>
 
             </div>
