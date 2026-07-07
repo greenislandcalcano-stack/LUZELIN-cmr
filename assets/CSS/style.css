@@ -237,3 +237,62 @@ body {
     overflow:auto;
 
 }
+/* ==========================================
+   ACTION BUTTONS
+========================================== */
+
+.quick-action-btn{
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+
+    width:100%;
+    height:56px;
+
+    border:none;
+    border-radius:12px;
+
+    font-size:17px;
+    font-weight:600;
+
+    transition:.20s;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
+
+}
+
+.quick-action-btn:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:0 8px 18px rgba(0,0,0,.15);
+
+}
+
+.quick-action-btn i{
+
+    font-size:20px;
+
+}
+
+.btn-new-order{
+    background:#198754;
+    color:#fff;
+}
+
+.btn-new-order:hover{
+    background:#157347;
+    color:#fff;
+}
+
+.btn-view{
+    background:#0d6efd;
+    color:#fff;
+}
+
+.btn-view:hover{
+    background:#0b5ed7;
+    color:#fff;
+}
