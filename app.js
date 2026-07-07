@@ -165,11 +165,11 @@ function clearPOSCart() {
 function completePOSOrder() {
 
     if (posCart.length === 0) {
-
         alert("No hay productos en la orden.");
         return;
-
     }
+
+    let sales = JSON.parse(localStorage.getItem("sales")) || [];
 
     let total = 0;
 
@@ -177,11 +177,22 @@ function completePOSOrder() {
         total += item.qty * item.price;
     });
 
+    const sale = {
+        ticket: "LC-" + String(sales.length + 1).padStart(5, "0"),
+        date: new Date().toLocaleString(),
+        items: posCart,
+        total: total,
+        status: "Completed"
+    };
+
+    sales.push(sale);
+
+    localStorage.setItem("sales", JSON.stringify(sales));
+
     alert(
-`Orden completada
+`Venta guardada correctamente
 
-Productos: ${posCart.length}
-
+Ticket: ${sale.ticket}
 Total: RD$${total.toLocaleString()}`
     );
 
