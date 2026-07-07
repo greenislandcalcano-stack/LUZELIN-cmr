@@ -5,12 +5,11 @@
         <div>
             <h2 class="fw-bold mb-1">🪑 Tables</h2>
             <p class="text-muted mb-0">
-                Manage dine-in, takeout, and delivery orders.
+                Manage dine-in, takeout and delivery orders.
             </p>
         </div>
 
-        <button class="btn btn-success"
-            onclick="loadPage('menu')">
+        <button class="btn btn-success page-btn" data-page="menu">
             <i class="bi bi-plus-circle"></i>
             New Takeout Order
         </button>
@@ -20,90 +19,106 @@
     <div class="row g-3">
 
         <div class="col-md-3">
-            <div class="table-card available">
+            <div class="table-card available text-center p-4">
                 <h3>Table 1</h3>
                 <p>Available</p>
-                <button class="btn btn-outline-success"
-                    onclick="loadPage('menu')">
+
+                <button class="btn btn-success page-btn"
+                        data-page="menu">
                     Open Order
                 </button>
+
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="table-card occupied">
+            <div class="table-card occupied text-center p-4">
                 <h3>Table 2</h3>
                 <p>Occupied</p>
-                <button class="btn btn-outline-danger"
-                    onclick="loadPage('orders')">
+
+                <button class="btn btn-danger page-btn"
+                        data-page="orders">
                     View Order
                 </button>
+
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="table-card available">
+            <div class="table-card available text-center p-4">
                 <h3>Table 3</h3>
                 <p>Available</p>
-                <button class="btn btn-outline-success"
-                    onclick="loadPage('menu')">
+
+                <button class="btn btn-success page-btn"
+                        data-page="menu">
                     Open Order
                 </button>
+
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="table-card occupied">
+            <div class="table-card occupied text-center p-4">
                 <h3>Table 4</h3>
                 <p>Preparing</p>
-                <button class="btn btn-outline-warning"
-                    onclick="loadPage('orders')">
+
+                <button class="btn btn-warning page-btn"
+                        data-page="orders">
                     Kitchen
                 </button>
+
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="table-card available">
+            <div class="table-card available text-center p-4">
                 <h3>Table 5</h3>
                 <p>Available</p>
-                <button class="btn btn-outline-success"
-                    onclick="loadPage('menu')">
+
+                <button class="btn btn-success page-btn"
+                        data-page="menu">
                     Open Order
                 </button>
+
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="table-card available">
+            <div class="table-card available text-center p-4">
                 <h3>Table 6</h3>
                 <p>Available</p>
-                <button class="btn btn-outline-success"
-                    onclick="loadPage('menu')">
+
+                <button class="btn btn-success page-btn"
+                        data-page="menu">
                     Open Order
                 </button>
+
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="table-card occupied">
+            <div class="table-card occupied text-center p-4">
                 <h3>Take Out</h3>
                 <p>2 Active Orders</p>
-                <button class="btn btn-outline-primary"
-                    onclick="loadPage('orders')">
+
+                <button class="btn btn-primary page-btn"
+                        data-page="orders">
                     View Orders
                 </button>
+
             </div>
         </div>
 
         <div class="col-md-3">
-            <div class="table-card occupied">
+            <div class="table-card occupied text-center p-4">
                 <h3>Delivery</h3>
                 <p>1 Active Order</p>
-                <button class="btn btn-outline-primary"
-                    onclick="loadPage('orders')">
+
+                <button class="btn btn-primary page-btn"
+                        data-page="orders">
                     View Orders
                 </button>
+
             </div>
         </div>
 
