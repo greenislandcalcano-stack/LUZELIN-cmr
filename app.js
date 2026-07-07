@@ -14,17 +14,17 @@ async function loadPage(page) {
     appContent.innerHTML = html;
     pageTitle.textContent = page.charAt(0).toUpperCase() + page.slice(1);
 
+    if (page === "sales") initSales();
+
   } catch (error) {
     appContent.innerHTML = `
       <div class="crm-card">
         <h3>Page not found</h3>
-        <p>Please make sure <strong>pages/${page}.html</strong> exists.</p>
+        <p>Please make sure <strong>assets/pages/${page}.html</strong> exists.</p>
       </div>
     `;
-    if (page === "sales") initSales();
   }
 }
-
 navLinks.forEach(link => {
   link.addEventListener("click", function (e) {
     e.preventDefault();
