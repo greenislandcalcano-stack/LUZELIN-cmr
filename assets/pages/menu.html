@@ -2,272 +2,164 @@
 
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-      <h2>🍽️ Menu Management</h2>
-      <p class="text-muted mb-0">Manage kitchen items, drinks, desserts and add-ups.</p>
+      <h3 class="fw-bold mb-1">POS / Menu</h3>
+      <p class="text-muted mb-0">Selecciona productos y crea órdenes rápido.</p>
     </div>
 
-    <button class="btn btn-success">
-      <i class="bi bi-plus-circle"></i> Add Product
+    <button class="btn btn-dark" onclick="clearPOSCart()">
+      <i class="bi bi-trash"></i> Limpiar orden
     </button>
   </div>
 
-  <!-- Categories -->
-  <div class="d-flex flex-wrap gap-2 mb-4">
-    <button class="btn btn-success">All</button>
-    <button class="btn btn-outline-success">Muelle Viejo</button>
-    <button class="btn btn-outline-success">Pescador</button>
-    <button class="btn btn-outline-success">Los Rieles</button>
-    <button class="btn btn-outline-success">Bebidas</button>
-    <button class="btn btn-outline-success">Postres</button>
-    <button class="btn btn-outline-success">Add-Ups</button>
-  </div>
+  <div class="row g-4">
 
-  <!-- MUELLE VIEJO -->
-  <h4 class="fw-bold mt-4 mb-3">⚓ Muelle Viejo Mariscos</h4>
+    <div class="col-lg-8">
 
-  <div class="row g-3">
+      <h5 class="fw-bold mb-3">Cocina</h5>
+      <div class="row g-3">
 
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Camarones</h5>
-        <p>A elegir: al ajillo, a la criolla, fritos o a la plancha.</p>
-        <strong>RD$675</strong>
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Pizza Personal', 250)">
+            <strong>Pizza Personal</strong>
+            <span>RD$250</span>
+          </button>
+        </div>
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Pizza Mediana', 550)">
+            <strong>Pizza Mediana</strong>
+            <span>RD$550</span>
+          </button>
+        </div>
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Pizza Familiar', 850)">
+            <strong>Pizza Familiar</strong>
+            <span>RD$850</span>
+          </button>
+        </div>
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Hamburguesa', 280)">
+            <strong>Hamburguesa</strong>
+            <span>RD$280</span>
+          </button>
+        </div>
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Hot Dog', 180)">
+            <strong>Hot Dog</strong>
+            <span>RD$180</span>
+          </button>
+        </div>
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Papas Fritas', 150)">
+            <strong>Papas Fritas</strong>
+            <span>RD$150</span>
+          </button>
+        </div>
+
       </div>
+
+      <h5 class="fw-bold mt-4 mb-3">Postres</h5>
+      <div class="row g-3">
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Flan', 120)">
+            <strong>Flan</strong>
+            <span>RD$120</span>
+          </button>
+        </div>
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Tres Leches', 180)">
+            <strong>Tres Leches</strong>
+            <span>RD$180</span>
+          </button>
+        </div>
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Bizcocho', 150)">
+            <strong>Bizcocho</strong>
+            <span>RD$150</span>
+          </button>
+        </div>
+
+      </div>
+
+      <h5 class="fw-bold mt-4 mb-3">Bebidas</h5>
+      <div class="row g-3">
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Refresco', 75)">
+            <strong>Refresco</strong>
+            <span>RD$75</span>
+          </button>
+        </div>
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Agua', 50)">
+            <strong>Agua</strong>
+            <span>RD$50</span>
+          </button>
+        </div>
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Jugo Natural', 120)">
+            <strong>Jugo Natural</strong>
+            <span>RD$120</span>
+          </button>
+        </div>
+
+      </div>
+
+      <h5 class="fw-bold mt-4 mb-3">Add-ups</h5>
+      <div class="row g-3">
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Extra Queso', 75)">
+            <strong>Extra Queso</strong>
+            <span>RD$75</span>
+          </button>
+        </div>
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Extra Bacon', 100)">
+            <strong>Extra Bacon</strong>
+            <span>RD$100</span>
+          </button>
+        </div>
+
+        <div class="col-md-4">
+          <button class="pos-item" onclick="addToPOS('Extra Salsa', 50)">
+            <strong>Extra Salsa</strong>
+            <span>RD$50</span>
+          </button>
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Lambi / Caracol</h5>
-        <p>A elegir: al ajillo, a la criolla, frito o guisado.</p>
-        <strong>RD$875</strong>
-      </div>
-    </div>
+    <div class="col-lg-4">
+      <div class="pos-cart">
+        <h5 class="fw-bold mb-3">Orden actual</h5>
 
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Pulpo</h5>
-        <p>A elegir: al ajillo, a la criolla o guisado.</p>
-        <strong>RD$995</strong>
-      </div>
-    </div>
+        <div id="posCartItems" class="pos-cart-items">
+          <p class="text-muted">No hay productos seleccionados.</p>
+        </div>
 
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Masa de Cangrejo</h5>
-        <p>Preparada al estilo de la casa.</p>
-        <strong>RD$795</strong>
-      </div>
-    </div>
+        <hr>
 
-  </div>
+        <div class="d-flex justify-content-between fs-5 fw-bold">
+          <span>Total</span>
+          <span id="posCartTotal">RD$0</span>
+        </div>
 
-  <!-- PESCADOR -->
-  <h4 class="fw-bold mt-5 mb-3">🐟 Pescador</h4>
-
-  <div class="row g-3">
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Chillo</h5>
-        <p>A elegir: al ajillo, al vapor, frito o criollo.</p>
-        <strong>RD$875</strong>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Mero</h5>
-        <p>A elegir: al ajillo, al vapor, frito o criollo.</p>
-        <strong>RD$675</strong>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Pargo</h5>
-        <p>Precio según disponibilidad y peso.</p>
-        <strong>RD$895</strong>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- LOS RIELES -->
-  <h4 class="fw-bold mt-5 mb-3">🚂 Los Rieles / Parrilla</h4>
-
-  <div class="row g-3">
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Pollo a la Parrilla</h5>
-        <p>Pollo acompañado de guarnición.</p>
-        <strong>RD$495</strong>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- BEBIDAS -->
-  <h4 class="fw-bold mt-5 mb-3">🥤 Bebidas Naturales</h4>
-
-  <div class="row g-3">
-
-    <div class="col-md-3">
-      <div class="menu-item-card">
-        <h5>Chinola</h5>
-        <strong>RD$150</strong>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="menu-item-card">
-        <h5>Limón</h5>
-        <strong>RD$150</strong>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="menu-item-card">
-        <h5>Naranja</h5>
-        <strong>RD$150</strong>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="menu-item-card">
-        <h5>Fresa</h5>
-        <strong>RD$150</strong>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="menu-item-card">
-        <h5>Tamarindo</h5>
-        <strong>RD$150</strong>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="menu-item-card">
-        <h5>Avena</h5>
-        <strong>RD$150</strong>
-      </div>
-    </div>
-
-  </div>
-
-  <h4 class="fw-bold mt-5 mb-3">🍹 Tragos de la Casa</h4>
-
-  <div class="row g-3">
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Beso de Sirena</h5>
-        <strong>RD$275</strong>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Beso de Amor</h5>
-        <strong>RD$275</strong>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Blue Horizon</h5>
-        <strong>RD$275</strong>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Muchachita de Montserrat</h5>
-        <strong>RD$275</strong>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Coquito Especial</h5>
-        <strong>RD$275</strong>
-      </div>
-    </div>
-
-  </div>
-
-  <h4 class="fw-bold mt-5 mb-3">🍺 Cervezas</h4>
-
-  <div class="row g-3">
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Presidente</h5>
-        <strong>RD$250</strong>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- POSTRES -->
-  <h4 class="fw-bold mt-5 mb-3">🍰 Postres Caseros</h4>
-
-  <div class="row g-3">
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Flan</h5>
-        <strong>RD$175</strong>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Dulce de Coco</h5>
-        <strong>RD$175</strong>
-      </div>
-    </div>
-
-    <div class="col-md-4">
-      <div class="menu-item-card">
-        <h5>Tres Leches</h5>
-        <strong>RD$175</strong>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ADD UPS -->
-  <h4 class="fw-bold mt-5 mb-3">➕ Add-Ups / Extras</h4>
-
-  <div class="row g-3">
-
-    <div class="col-md-3">
-      <div class="menu-item-card">
-        <h5>Tostones</h5>
-        <strong>RD$150</strong>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="menu-item-card">
-        <h5>Papas Fritas</h5>
-        <strong>RD$150</strong>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="menu-item-card">
-        <h5>Arroz Blanco</h5>
-        <strong>RD$150</strong>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="menu-item-card">
-        <h5>Ensalada</h5>
-        <strong>RD$150</strong>
+        <button class="btn btn-success w-100 mt-3" onclick="completePOSOrder()">
+          <i class="bi bi-check-circle"></i> Completar orden
+        </button>
       </div>
     </div>
 
