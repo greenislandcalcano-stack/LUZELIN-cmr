@@ -18,7 +18,11 @@ async function loadPage(page) {
   renderDashboardPage();
   return;
 }
-
+if (page === "dashboard") {
+  pageTitle.textContent = "Dashboard";
+  renderDashboardPage();
+  return;
+}
 if (page === "tables") {
   pageTitle.textContent = "Tables";
   renderTablesPage();
@@ -89,7 +93,7 @@ navLinks.forEach(link => {
   });
 });
 
-loadPage("dashboard");
+
 
 /* =====================================================
    TABLES
@@ -824,3 +828,4 @@ function renderDashboardPage() {
     </div>
   `;
 }
+loadPage("dashboard");
