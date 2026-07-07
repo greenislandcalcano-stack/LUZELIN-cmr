@@ -278,3 +278,111 @@ function clearSalesHistory() {
     localStorage.removeItem("sales");
     renderSales();
 }
+const TOTAL_TABLES = 12;
+
+let tableOrders = JSON.parse(localStorage.getItem("tableOrders")) || {};
+
+function saveTableOrders() {
+  localStorage.setItem("tableOrders", JSON.stringify(tableOrders));
+}
+
+function getTables() {
+  const tables = [];
+
+  for (let i = 1; i <= TOTAL_TABLES; i++) {
+    const tableId = `table-${i}`;
+
+    tables.push({
+      id: tableId,
+      number: i,
+      occupied: tableOrders[tableId] && tableOrders[tableId].items?.length > 0
+    });
+  }
+
+  return tables;
+}
+
+function renderTablesPage() {
+  const tables = getTables();
+
+  const openTables = tables.filter(table => !table.occupied).length;
+  const occupiedTables = tables.filter(table => table.occupied).length;
+
+  appContent.innerHTML = `
+    <div class="crm-card">
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="fw-bold mb-1">🪑 Tables</h2>
+          <p class="text-muted mb-0">
+            Select a table, takeout, or delivery to start an order.
+          </p>
+        </div>
+
+        <button class="btn btn-success page-btn" data-page="menu">
+          <i class="bi bi-plus-circle"></i>
+          New Takeout Order
+        </button>
+      </div>
+
+      <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+          <div class="crm-stat-card">
+            <h6>Open Tables</h6>
+            <h3>${openTables}</h3>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="crm-stat-card">
+            <h6>Occupied Tables</h6>
+            <h3>${occupiedTables}</h3>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="crm-stat-card">
+            <h6>Total Tables</h6>
+            <h3>${TOTAL_TABLES}</h3>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row g-3">
+        ${tables.map(table => `
+          <div class="col-6 col-md-4 col-lg-3">
+            <button 
+              class="table-card ${table.occupied ? "occupied" : "available"}"
+              onclick="openTableOrder('${table.id}')"
+            >
+              <div class="table-number">Table ${table.number}</div>
+              <div class="table-status">
+                ${table.occupied ? "Occupied" : "Available"}
+              </div>
+            </button>
+          </div>
+        `).join("")}
+      </div>
+
+    </div>
+  `;
+}
+
+function openTableOrder(tableId) {
+  if (!tableOrders[tableId]) {
+    tableOrders[tableId] = {
+      type: "table",
+      tableId: tableId,
+      items: []
+    };
+
+    saveTableOrders();
+  }
+
+  localStorage.setItem("activeOrderType", "table");
+  localStorage.setItem("activeTableId", tableId);
+
+  loadPage("menu");
+}
