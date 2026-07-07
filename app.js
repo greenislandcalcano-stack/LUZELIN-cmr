@@ -21,6 +21,7 @@ async function loadPage(page) {
         <p>Please make sure <strong>pages/${page}.html</strong> exists.</p>
       </div>
     `;
+    if (page === "sales") initSales();
   }
 }
 
@@ -199,4 +200,76 @@ Total: RD$${total.toLocaleString()}`
     posCart = [];
     renderPOSCart();
 
+}
+/* =====================================================
+   LOS COQUITOS SALES
+===================================================== */
+
+function initSales() {
+    renderSales();
+}
+
+function renderSales() {
+
+    const container = document.getElementById("salesList");
+    if (!container) return;
+
+    const sales = JSON.parse(localStorage.getItem("sales")) || [];
+
+    if (sales.length === 0) {
+        container.innerHTML = `
+            <div class="alert alert-info mb-0">
+                No hay ventas registradas todavía.
+            </div>
+        `;
+        return;
+    }
+
+    let html = `
+        <div class="table-responsive">
+            <table class="table align-middle">
+                <thead>
+                    <tr>
+                        <th>Ticket</th>
+                        <th>Fecha</th>
+                        <th>Productos</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `;
+
+    sales.slice().reverse().forEach(sale => {
+
+        const itemsCount = sale.items.reduce((sum, item) => sum + item.qty, 0);
+
+        html += `
+            <tr>
+                <td><strong>${sale.ticket}</strong></td>
+                <td>${sale.date}</td>
+                <td>${itemsCount}</td>
+                <td><strong>RD$${sale.total.toLocaleString()}</strong></td>
+                <td>
+                    <span class="badge bg-success">${sale.status}</span>
+                </td>
+            </tr>
+        `;
+    });
+
+    html += `
+                </tbody>
+            </table>
+        </div>
+    `;
+
+    container.innerHTML = html;
+}
+
+function clearSalesHistory() {
+
+    if (!confirm("¿Seguro que deseas borrar todo el historial de ventas?")) return;
+
+    localStorage.removeItem("sales");
+    renderSales();
 }
