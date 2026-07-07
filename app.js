@@ -8,7 +8,13 @@ const navLinks = document.querySelectorAll(".crm-nav a");
 
 async function loadPage(page) {
   try {
-    if (page === "tables") {
+   if (page === "dashboard") {
+  pageTitle.textContent = "Dashboard";
+  renderDashboardPage();
+  return;
+}
+
+if (page === "tables") {
   pageTitle.textContent = "Tables";
   renderTablesPage();
   return;
@@ -637,4 +643,179 @@ function openOrderFromList(tableName) {
   const tableId = tableName.toLowerCase().replace(" ", "-");
 
   openTableOrder(tableId);
+}
+function renderDashboardPage() {
+  const tableOrdersData = JSON.parse(localStorage.getItem("tableOrders")) || {};
+  const sales = JSON.parse(localStorage.getItem("sales")) || [];
+  const takeoutOrder = JSON.parse(localStorage.getItem("takeoutOrder")) || [];
+
+  const tables = getTables();
+
+  const openTables = tables.filter(table => !table.occupied).length;
+  const occupiedTables = tables.filter(table => table.occupied).length;
+
+  let openOrders = [];
+
+  Object.keys(tableOrdersData).forEach(tableId => {
+    const order = tableOrdersData[tableId];
+
+    if (order.items && order.items.length > 0) {
+      const subtotal = order.items.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const total = subtotal + subtotal * 0.18 + subtotal * 0.10;
+
+      openOrders.push({
+        ticket: "OPEN-" + tableId.replace("table-", "").padStart(3, "0"),
+        table: tableId.replace("table-", "Table "),
+        customer: "Walk In",
+        total,
+        status: "Preparing"
+      });
+    }
+  });
+
+  if (takeoutOrder.length > 0) {
+    const subtotal = takeoutOrder.reduce((sum, item) => sum + item.price * item.qty, 0);
+    const total = subtotal + subtotal * 0.18 + subtotal * 0.10;
+
+    openOrders.push({
+      ticket: "OPEN-TK",
+      table: "Takeout",
+      customer: "Walk In",
+      total,
+      status: "Preparing"
+    });
+  }
+
+  const today = new Date().toLocaleDateString();
+
+  const todaysSales = sales.filter(sale => {
+    return sale.date && sale.date.includes(today);
+  });
+
+  const todaySalesTotal = todaysSales.reduce((sum, sale) => sum + Number(sale.total || 0), 0);
+
+  appContent.innerHTML = `
+    <div class="crm-card mb-4">
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="fw-bold mb-1">🍕 Restaurant Dashboard</h2>
+          <p class="text-muted mb-0">Actividad actual del restaurante.</p>
+        </div>
+
+        <button class="btn btn-success" onclick="startTakeoutOrder()">
+          <i class="bi bi-plus-circle"></i>
+          New Order
+        </button>
+      </div>
+
+      <div class="row g-3">
+
+        <div class="col-md-3">
+          <div class="crm-stat-card">
+            <h6>Open Tables</h6>
+            <h3>${openTables}</h3>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="crm-stat-card">
+            <h6>Occupied Tables</h6>
+            <h3>${occupiedTables}</h3>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="crm-stat-card">
+            <h6>Open Orders</h6>
+            <h3>${openOrders.length}</h3>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="crm-stat-card">
+            <h6>Today's Sales</h6>
+            <h3>RD$${todaySalesTotal.toLocaleString()}</h3>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-lg-8">
+        <div class="crm-card">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="fw-bold mb-0">Recent Orders</h3>
+            <button class="btn btn-outline-success btn-sm" onclick="loadPage('orders')">
+              View All
+            </button>
+          </div>
+
+          ${
+            openOrders.length === 0
+              ? `
+                <div class="alert alert-info mb-0">
+                  No hay órdenes abiertas ahora mismo.
+                </div>
+              `
+              : `
+                <div class="table-responsive">
+                  <table class="table align-middle">
+                    <thead>
+                      <tr>
+                        <th>Ticket</th>
+                        <th>Table</th>
+                        <th>Customer</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      ${openOrders.map(order => `
+                        <tr>
+                          <td><strong>${order.ticket}</strong></td>
+                          <td>${order.table}</td>
+                          <td>${order.customer}</td>
+                          <td><strong>RD$${order.total.toLocaleString()}</strong></td>
+                          <td>
+                            <span class="badge bg-warning text-dark">${order.status}</span>
+                          </td>
+                        </tr>
+                      `).join("")}
+                    </tbody>
+                  </table>
+                </div>
+              `
+          }
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="crm-card">
+          <h3 class="fw-bold mb-3">Quick Actions</h3>
+
+          <button class="btn btn-success w-100 mb-3" onclick="startTakeoutOrder()">
+            <i class="bi bi-plus-circle"></i> New Order
+          </button>
+
+          <button class="btn btn-warning w-100 mb-3" onclick="loadPage('tables')">
+            <i class="bi bi-grid-3x3-gap"></i> Manage Tables
+          </button>
+
+          <button class="btn btn-primary w-100 mb-3" onclick="startTakeoutOrder()">
+            <i class="bi bi-receipt"></i> POS / Menu
+          </button>
+
+          <button class="btn btn-danger w-100" onclick="loadPage('sales')">
+            <i class="bi bi-graph-up"></i> Sales History
+          </button>
+        </div>
+      </div>
+
+    </div>
+  `;
 }
