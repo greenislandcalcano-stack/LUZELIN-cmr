@@ -19,7 +19,10 @@ document.querySelectorAll(".page-btn").forEach(button => {
         loadPage(targetPage);
     });
 });
-    if (page === "sales") initSales();
+    if (page === "tables") {
+  renderTablesPage();
+  return;
+}
 
   } catch (error) {
     appContent.innerHTML = `
