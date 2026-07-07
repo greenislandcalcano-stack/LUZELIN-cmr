@@ -326,7 +326,35 @@ function renderPOSCart() {
   });
 
   container.innerHTML = html;
-  totalLabel.textContent = "RD$" + total.toLocaleString();
+  const itbis = total * 0.18;
+const service = total * 0.10;
+const finalTotal = total + itbis + service;
+
+totalLabel.innerHTML = `
+  <div class="text-start">
+    <div class="d-flex justify-content-between">
+      <span>Subtotal</span>
+      <strong>RD$${total.toLocaleString()}</strong>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <span>ITBIS 18%</span>
+      <strong>RD$${itbis.toLocaleString()}</strong>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <span>Propina legal 10%</span>
+      <strong>RD$${service.toLocaleString()}</strong>
+    </div>
+
+    <hr>
+
+    <div class="d-flex justify-content-between fs-5">
+      <span>Total</span>
+      <strong>RD$${finalTotal.toLocaleString()}</strong>
+    </div>
+  </div>
+`;
 }
 
 function increasePOSItem(index) {
@@ -376,6 +404,9 @@ function completePOSOrder() {
 
   const orderType = getActiveOrderType();
   const tableId = getActiveTableId();
+   const itbis = total * 0.18;
+const service = total * 0.10;
+const finalTotal = total + itbis + service;
 
   const sale = {
     ticket: "LC-" + String(sales.length + 1).padStart(5, "0"),
@@ -383,7 +414,10 @@ function completePOSOrder() {
     type: orderType,
     table: tableId ? tableId.replace("table-", "Table ") : "Takeout",
     items: posCart,
-    total: total,
+  subtotal: total,
+itbis: itbis,
+service: service,
+total: finalTotal,
     status: "Completed"
   };
 
@@ -394,7 +428,7 @@ function completePOSOrder() {
 `Venta guardada correctamente
 
 Ticket: ${sale.ticket}
-Total: RD$${total.toLocaleString()}`
+Total: RD$${finalTotal.toLocaleString()}`
   );
 
   posCart = [];
