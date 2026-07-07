@@ -8,32 +8,24 @@ const navLinks = document.querySelectorAll(".crm-nav a");
 
 async function loadPage(page) {
   try {
-   if (page === "dashboard") {
-    alert("Dashboard dinámico");
-    pageTitle.textContent = "Dashboard";
-    renderDashboardPage();
-    return;
-}
-  pageTitle.textContent = "Dashboard";
-  renderDashboardPage();
-  return;
-}
-if (page === "dashboard") {
-  pageTitle.textContent = "Dashboard";
-  renderDashboardPage();
-  return;
-}
-if (page === "tables") {
-  pageTitle.textContent = "Tables";
-  renderTablesPage();
-  return;
-}
 
-if (page === "orders") {
-  pageTitle.textContent = "Orders";
-  renderOrdersPage();
-  return;
-}
+    if (page === "dashboard") {
+      pageTitle.textContent = "Dashboard";
+      renderDashboardPage();
+      return;
+    }
+
+    if (page === "tables") {
+      pageTitle.textContent = "Tables";
+      renderTablesPage();
+      return;
+    }
+
+    if (page === "orders") {
+      pageTitle.textContent = "Orders";
+      renderOrdersPage();
+      return;
+    }
 
     const response = await fetch(`assets/pages/${page}.html`);
 
@@ -43,7 +35,8 @@ if (page === "orders") {
 
     const html = await response.text();
     appContent.innerHTML = html;
-    pageTitle.textContent = page.charAt(0).toUpperCase() + page.slice(1);
+    pageTitle.textContent =
+      page.charAt(0).toUpperCase() + page.slice(1);
 
     document.querySelectorAll(".page-btn").forEach(button => {
       button.addEventListener("click", function () {
@@ -67,15 +60,16 @@ if (page === "orders") {
     }
 
   } catch (error) {
+
     appContent.innerHTML = `
       <div class="crm-card">
         <h3>Page not found</h3>
         <p>Please make sure <strong>assets/pages/${page}.html</strong> exists.</p>
       </div>
     `;
+
   }
 }
-
 navLinks.forEach(link => {
   link.addEventListener("click", function (e) {
     e.preventDefault();
