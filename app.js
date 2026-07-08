@@ -3,12 +3,19 @@ const pageTitle = document.getElementById("page-title");
 const navLinks = document.querySelectorAll(".crm-nav a");
 
 /* =====================================================
+   GLOBAL SETTINGS
+===================================================== */
+
+const TOTAL_TABLES = 12;
+let tableOrders = JSON.parse(localStorage.getItem("tableOrders")) || {};
+let posCart = [];
+
+/* =====================================================
    PAGE LOADER
 ===================================================== */
 
 async function loadPage(page) {
   try {
-
     if (page === "dashboard") {
       pageTitle.textContent = "Dashboard";
       renderDashboardPage();
@@ -35,8 +42,7 @@ async function loadPage(page) {
 
     const html = await response.text();
     appContent.innerHTML = html;
-    pageTitle.textContent =
-      page.charAt(0).toUpperCase() + page.slice(1);
+    pageTitle.textContent = page.charAt(0).toUpperCase() + page.slice(1);
 
     document.querySelectorAll(".page-btn").forEach(button => {
       button.addEventListener("click", function () {
@@ -60,16 +66,19 @@ async function loadPage(page) {
     }
 
   } catch (error) {
-
     appContent.innerHTML = `
       <div class="crm-card">
         <h3>Page not found</h3>
         <p>Please make sure <strong>assets/pages/${page}.html</strong> exists.</p>
       </div>
     `;
-
   }
 }
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
 navLinks.forEach(link => {
   link.addEventListener("click", function (e) {
     e.preventDefault();
@@ -87,15 +96,9 @@ navLinks.forEach(link => {
   });
 });
 
-
-
 /* =====================================================
    TABLES
 ===================================================== */
-
-const TOTAL_TABLES = 12;
-
-let tableOrders = JSON.parse(localStorage.getItem("tableOrders")) || {};
 
 function saveTableOrders() {
   localStorage.setItem("tableOrders", JSON.stringify(tableOrders));
@@ -120,7 +123,6 @@ function getTables() {
 
 function renderTablesPage() {
   const tables = getTables();
-
   const openTables = tables.filter(table => !table.occupied).length;
   const occupiedTables = tables.filter(table => table.occupied).length;
 
@@ -130,19 +132,15 @@ function renderTablesPage() {
       <div class="d-flex justify-content-between align-items-center mb-4">
         <div>
           <h2 class="fw-bold mb-1">🪑 Tables</h2>
-          <p class="text-muted mb-0">
-            Select a table, takeout, or delivery to start an order.
-          </p>
+          <p class="text-muted mb-0">Select a table, takeout, or delivery to start an order.</p>
         </div>
 
         <button class="btn btn-success" onclick="startTakeoutOrder()">
-          <i class="bi bi-plus-circle"></i>
-          New Takeout Order
+          <i class="bi bi-plus-circle"></i> New Takeout Order
         </button>
       </div>
 
       <div class="row g-3 mb-4">
-
         <div class="col-md-4">
           <div class="crm-stat-card">
             <h6>Open Tables</h6>
@@ -163,7 +161,6 @@ function renderTablesPage() {
             <h3>${TOTAL_TABLES}</h3>
           </div>
         </div>
-
       </div>
 
       <div class="row g-3">
@@ -190,7 +187,7 @@ function openTableOrder(tableId) {
   if (!tableOrders[tableId]) {
     tableOrders[tableId] = {
       type: "table",
-      tableId: tableId,
+      tableId,
       items: []
     };
     saveTableOrders();
@@ -212,10 +209,8 @@ function startTakeoutOrder() {
 }
 
 /* =====================================================
-   LOS COQUITOS POS
+   POS
 ===================================================== */
-
-let posCart = [];
 
 function getActiveOrderType() {
   return localStorage.getItem("activeOrderType") || "takeout";
@@ -233,7 +228,7 @@ function loadPOSCart() {
     if (!tableOrders[tableId]) {
       tableOrders[tableId] = {
         type: "table",
-        tableId: tableId,
+        tableId,
         items: []
       };
       saveTableOrders();
@@ -253,7 +248,7 @@ function savePOSCart() {
     if (!tableOrders[tableId]) {
       tableOrders[tableId] = {
         type: "table",
-        tableId: tableId,
+        tableId,
         items: []
       };
     }
@@ -266,7 +261,7 @@ function savePOSCart() {
 }
 
 function addToPOS(name, price) {
-  const existing = posCart.find(i => i.name === name);
+  const existing = posCart.find(item => item.name === name);
 
   if (existing) {
     existing.qty++;
@@ -289,87 +284,71 @@ function renderPOSCart() {
   if (!container || !totalLabel) return;
 
   if (posCart.length === 0) {
-    container.innerHTML =
-      `<p class="text-muted">No hay productos seleccionados.</p>`;
-
+    container.innerHTML = `<p class="text-muted">No hay productos seleccionados.</p>`;
     totalLabel.textContent = "RD$0";
     return;
   }
 
   let html = "";
-  let total = 0;
+  let subtotal = 0;
 
   posCart.forEach((item, index) => {
-    const subtotal = item.qty * item.price;
-    total += subtotal;
+    const itemSubtotal = item.qty * item.price;
+    subtotal += itemSubtotal;
 
     html += `
       <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-
         <div>
           <strong>${item.name}</strong><br>
           <small>${item.qty} x RD$${item.price}</small>
         </div>
 
         <div class="text-end">
-
-          <strong>RD$${subtotal}</strong>
+          <strong>RD$${itemSubtotal.toLocaleString()}</strong>
 
           <div class="mt-1">
-
-            <button class="btn btn-sm btn-outline-secondary"
-              onclick="decreasePOSItem(${index})">
-              -
-            </button>
-
-            <button class="btn btn-sm btn-outline-secondary"
-              onclick="increasePOSItem(${index})">
-              +
-            </button>
-
-            <button class="btn btn-sm btn-outline-danger"
-              onclick="removePOSItem(${index})">
+            <button class="btn btn-sm btn-outline-secondary" onclick="decreasePOSItem(${index})">-</button>
+            <button class="btn btn-sm btn-outline-secondary" onclick="increasePOSItem(${index})">+</button>
+            <button class="btn btn-sm btn-outline-danger" onclick="removePOSItem(${index})">
               <i class="bi bi-trash"></i>
             </button>
-
           </div>
-
         </div>
-
       </div>
     `;
   });
 
+  const itbis = subtotal * 0.18;
+  const service = subtotal * 0.10;
+  const total = subtotal + itbis + service;
+
   container.innerHTML = html;
-  const itbis = total * 0.18;
-const service = total * 0.10;
-const finalTotal = total + itbis + service;
 
-totalLabel.innerHTML = `
-  <div class="text-start">
-    <div class="d-flex justify-content-between">
-      <span>Subtotal</span>
-      <strong>RD$${total.toLocaleString()}</strong>
+  totalLabel.innerHTML = `
+    <div class="text-start">
+      <div class="d-flex justify-content-between">
+        <span>Subtotal</span>
+        <strong>RD$${subtotal.toLocaleString()}</strong>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <span>ITBIS 18%</span>
+        <strong>RD$${itbis.toLocaleString()}</strong>
+      </div>
+
+      <div class="d-flex justify-content-between">
+        <span>Propina legal 10%</span>
+        <strong>RD$${service.toLocaleString()}</strong>
+      </div>
+
+      <hr>
+
+      <div class="d-flex justify-content-between fs-5">
+        <span>Total</span>
+        <strong>RD$${total.toLocaleString()}</strong>
+      </div>
     </div>
-
-    <div class="d-flex justify-content-between">
-      <span>ITBIS 18%</span>
-      <strong>RD$${itbis.toLocaleString()}</strong>
-    </div>
-
-    <div class="d-flex justify-content-between">
-      <span>Propina legal 10%</span>
-      <strong>RD$${service.toLocaleString()}</strong>
-    </div>
-
-    <hr>
-
-    <div class="d-flex justify-content-between fs-5">
-      <span>Total</span>
-      <strong>RD$${finalTotal.toLocaleString()}</strong>
-    </div>
-  </div>
-`;
+  `;
 }
 
 function increasePOSItem(index) {
@@ -409,42 +388,38 @@ function completePOSOrder() {
     return;
   }
 
-  let sales = JSON.parse(localStorage.getItem("sales")) || [];
+  const sales = JSON.parse(localStorage.getItem("sales")) || [];
 
-  let total = 0;
-
-  posCart.forEach(item => {
-    total += item.qty * item.price;
-  });
+  const subtotal = posCart.reduce((sum, item) => sum + item.qty * item.price, 0);
+  const itbis = subtotal * 0.18;
+  const service = subtotal * 0.10;
+  const total = subtotal + itbis + service;
 
   const orderType = getActiveOrderType();
   const tableId = getActiveTableId();
-   const itbis = total * 0.18;
-const service = total * 0.10;
-const finalTotal = total + itbis + service;
 
   const sale = {
     ticket: "LC-" + String(sales.length + 1).padStart(5, "0"),
     date: new Date().toLocaleString(),
     type: orderType,
     table: tableId ? tableId.replace("table-", "Table ") : "Takeout",
-    items: posCart,
-  subtotal: total,
-itbis: itbis,
-service: service,
-total: finalTotal,
+    items: [...posCart],
+    subtotal,
+    itbis,
+    service,
+    total,
     status: "Completed"
   };
 
   sales.push(sale);
   localStorage.setItem("sales", JSON.stringify(sales));
 
-  alert(
-`Venta guardada correctamente
+  alert(`
+Venta guardada correctamente
 
 Ticket: ${sale.ticket}
-Total: RD$${finalTotal.toLocaleString()}`
-  );
+Total: RD$${total.toLocaleString()}
+  `);
 
   posCart = [];
 
@@ -459,91 +434,21 @@ Total: RD$${finalTotal.toLocaleString()}`
 }
 
 /* =====================================================
-   LOS COQUITOS SALES
+   ORDERS
 ===================================================== */
 
-function initSales() {
-  renderSales();
-}
-
-function renderSales() {
-  const container = document.getElementById("salesList");
-  if (!container) return;
-
-  const sales = JSON.parse(localStorage.getItem("sales")) || [];
-
-  if (sales.length === 0) {
-    container.innerHTML = `
-      <div class="alert alert-info mb-0">
-        No hay ventas registradas todavía.
-      </div>
-    `;
-    return;
-  }
-
-  let html = `
-    <div class="table-responsive">
-      <table class="table align-middle">
-        <thead>
-          <tr>
-            <th>Ticket</th>
-            <th>Fecha</th>
-            <th>Tipo</th>
-            <th>Productos</th>
-            <th>Total</th>
-            <th>Estado</th>
-          </tr>
-        </thead>
-        <tbody>
-  `;
-
-  sales.slice().reverse().forEach(sale => {
-    const itemsCount = sale.items.reduce((sum, item) => sum + item.qty, 0);
-
-    html += `
-      <tr>
-        <td><strong>${sale.ticket}</strong></td>
-        <td>${sale.date}</td>
-        <td>${sale.table || "Takeout"}</td>
-        <td>${itemsCount}</td>
-        <td><strong>RD$${sale.total.toLocaleString()}</strong></td>
-        <td>
-          <span class="badge bg-success">${sale.status}</span>
-        </td>
-      </tr>
-    `;
-  });
-
-  html += `
-        </tbody>
-      </table>
-    </div>
-  `;
-
-  container.innerHTML = html;
-}
-
-function clearSalesHistory() {
-  if (!confirm("¿Seguro que deseas borrar todo el historial de ventas?")) return;
-
-  localStorage.removeItem("sales");
-  renderSales();
-}
-function renderOrdersPage() {
-  const sales = JSON.parse(localStorage.getItem("sales")) || [];
-  const tableOrders = JSON.parse(localStorage.getItem("tableOrders")) || {};
+function getOpenOrders() {
+  const tableOrdersData = JSON.parse(localStorage.getItem("tableOrders")) || {};
   const takeoutOrder = JSON.parse(localStorage.getItem("takeoutOrder")) || [];
 
-  let openOrders = [];
+  const openOrders = [];
 
-  Object.keys(tableOrders).forEach(tableId => {
-    const order = tableOrders[tableId];
+  Object.keys(tableOrdersData).forEach(tableId => {
+    const order = tableOrdersData[tableId];
 
     if (order.items && order.items.length > 0) {
       const subtotal = order.items.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const itbis = subtotal * 0.18;
-      const service = subtotal * 0.10;
-      const total = subtotal + itbis + service;
+      const total = subtotal + subtotal * 0.18 + subtotal * 0.10;
 
       openOrders.push({
         order: "OPEN-" + tableId.replace("table-", "").padStart(3, "0"),
@@ -558,9 +463,7 @@ function renderOrdersPage() {
 
   if (takeoutOrder.length > 0) {
     const subtotal = takeoutOrder.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const itbis = subtotal * 0.18;
-    const service = subtotal * 0.10;
-    const total = subtotal + itbis + service;
+    const total = subtotal + subtotal * 0.18 + subtotal * 0.10;
 
     openOrders.push({
       order: "OPEN-TK",
@@ -572,6 +475,12 @@ function renderOrdersPage() {
     });
   }
 
+  return openOrders;
+}
+
+function renderOrdersPage() {
+  const openOrders = getOpenOrders();
+
   appContent.innerHTML = `
     <div class="crm-card">
 
@@ -582,8 +491,7 @@ function renderOrdersPage() {
         </div>
 
         <button class="btn btn-success" onclick="startTakeoutOrder()">
-          <i class="bi bi-plus-circle"></i>
-          New Order
+          <i class="bi bi-plus-circle"></i> New Order
         </button>
       </div>
 
@@ -644,50 +552,92 @@ function openOrderFromList(tableName) {
   }
 
   const tableId = tableName.toLowerCase().replace(" ", "-");
-
   openTableOrder(tableId);
 }
-function renderDashboardPage() {
-  const tableOrdersData = JSON.parse(localStorage.getItem("tableOrders")) || {};
-  const sales = JSON.parse(localStorage.getItem("sales")) || [];
-  const takeoutOrder = JSON.parse(localStorage.getItem("takeoutOrder")) || [];
 
+/* =====================================================
+   SALES
+===================================================== */
+
+function initSales() {
+  renderSales();
+}
+
+function renderSales() {
+  const container = document.getElementById("salesList");
+  if (!container) return;
+
+  const sales = JSON.parse(localStorage.getItem("sales")) || [];
+
+  if (sales.length === 0) {
+    container.innerHTML = `
+      <div class="alert alert-info mb-0">
+        No hay ventas registradas todavía.
+      </div>
+    `;
+    return;
+  }
+
+  let html = `
+    <div class="table-responsive">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>Ticket</th>
+            <th>Fecha</th>
+            <th>Tipo</th>
+            <th>Productos</th>
+            <th>Total</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
+
+  sales.slice().reverse().forEach(sale => {
+    const itemsCount = sale.items.reduce((sum, item) => sum + item.qty, 0);
+
+    html += `
+      <tr>
+        <td><strong>${sale.ticket}</strong></td>
+        <td>${sale.date}</td>
+        <td>${sale.table || "Takeout"}</td>
+        <td>${itemsCount}</td>
+        <td><strong>RD$${Number(sale.total || 0).toLocaleString()}</strong></td>
+        <td>
+          <span class="badge bg-success">${sale.status}</span>
+        </td>
+      </tr>
+    `;
+  });
+
+  html += `
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  container.innerHTML = html;
+}
+
+function clearSalesHistory() {
+  if (!confirm("¿Seguro que deseas borrar todo el historial de ventas?")) return;
+
+  localStorage.removeItem("sales");
+  renderSales();
+}
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+function renderDashboardPage() {
+  const sales = JSON.parse(localStorage.getItem("sales")) || [];
   const tables = getTables();
+  const openOrders = getOpenOrders();
 
   const openTables = tables.filter(table => !table.occupied).length;
   const occupiedTables = tables.filter(table => table.occupied).length;
-
-  let openOrders = [];
-
-  Object.keys(tableOrdersData).forEach(tableId => {
-    const order = tableOrdersData[tableId];
-
-    if (order.items && order.items.length > 0) {
-      const subtotal = order.items.reduce((sum, item) => sum + item.price * item.qty, 0);
-      const total = subtotal + subtotal * 0.18 + subtotal * 0.10;
-
-      openOrders.push({
-        ticket: "OPEN-" + tableId.replace("table-", "").padStart(3, "0"),
-        table: tableId.replace("table-", "Table "),
-        customer: "Walk In",
-        total,
-        status: "Preparing"
-      });
-    }
-  });
-
-  if (takeoutOrder.length > 0) {
-    const subtotal = takeoutOrder.reduce((sum, item) => sum + item.price * item.qty, 0);
-    const total = subtotal + subtotal * 0.18 + subtotal * 0.10;
-
-    openOrders.push({
-      ticket: "OPEN-TK",
-      table: "Takeout",
-      customer: "Walk In",
-      total,
-      status: "Preparing"
-    });
-  }
 
   const today = new Date().toLocaleDateString();
 
@@ -695,7 +645,9 @@ function renderDashboardPage() {
     return sale.date && sale.date.includes(today);
   });
 
-  const todaySalesTotal = todaysSales.reduce((sum, sale) => sum + Number(sale.total || 0), 0);
+  const todaySalesTotal = todaysSales.reduce((sum, sale) => {
+    return sum + Number(sale.total || 0);
+  }, 0);
 
   appContent.innerHTML = `
     <div class="crm-card mb-4">
@@ -707,13 +659,11 @@ function renderDashboardPage() {
         </div>
 
         <button class="btn btn-success" onclick="startTakeoutOrder()">
-          <i class="bi bi-plus-circle"></i>
-          New Order
+          <i class="bi bi-plus-circle"></i> New Order
         </button>
       </div>
 
       <div class="row g-3">
-
         <div class="col-md-3">
           <div class="crm-stat-card">
             <h6>Open Tables</h6>
@@ -741,7 +691,6 @@ function renderDashboardPage() {
             <h3>RD$${todaySalesTotal.toLocaleString()}</h3>
           </div>
         </div>
-
       </div>
 
     </div>
@@ -780,7 +729,7 @@ function renderDashboardPage() {
                     <tbody>
                       ${openOrders.map(order => `
                         <tr>
-                          <td><strong>${order.ticket}</strong></td>
+                          <td><strong>${order.order}</strong></td>
                           <td>${order.table}</td>
                           <td>${order.customer}</td>
                           <td><strong>RD$${order.total.toLocaleString()}</strong></td>
@@ -822,4 +771,9 @@ function renderDashboardPage() {
     </div>
   `;
 }
+
+/* =====================================================
+   START APP
+===================================================== */
+
 loadPage("dashboard");
