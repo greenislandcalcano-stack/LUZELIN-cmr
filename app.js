@@ -71,7 +71,7 @@ const menuData = [
   },
   {
     category: "Pescados",
-    icon: "🐟",
+    icon: "����",
     items: [
       {
         id: "chillo",
@@ -580,9 +580,7 @@ function renderProductOptions(item) {
           }
         });
       });
-  }
-
-  if (item.type === "preparation") {
+  } else if (item.type === "preparation") {
     body.innerHTML = `
       <div class="pos-option-group">
         <label class="pos-option-label">
@@ -608,9 +606,7 @@ function renderProductOptions(item) {
 
       ${renderItemNoteField()}
     `;
-  }
-
-  if (item.type === "side") {
+  } else if (item.type === "side") {
     body.innerHTML = `
       <div class="pos-option-group">
         <label class="pos-option-label">
@@ -627,52 +623,6 @@ function renderProductOptions(item) {
                 ${index === 0 ? "checked" : ""}
               >
 
-              <span>${side}</span>
-              <strong>Incluida</strong>
-            </label>
-          `).join("")}
-        </div>
-      </div>
-
-
-      ${renderItemNoteField()}
-    `;
-
-    document.querySelectorAll('input[name="pizzaSize"]').forEach(input => {
-      input.addEventListener("change", event => {
-        const label = document.getElementById("cheeseCrustPriceLabel");
-        if (label) label.textContent = `+${money(cheeseCrustPrices[event.target.value])}`;
-      });
-    });
-  }
-
-  if (item.type === "preparation") {
-    body.innerHTML = `
-      <div class="pos-option-group">
-        <label class="pos-option-label">Selecciona la preparación</label>
-        <div class="pos-option-list">
-          ${item.options.map((option, index) => `
-            <label class="pos-option-line">
-              <input type="radio" name="preparationOption" value="${index}" ${index === 0 ? "checked" : ""}>
-              <span>${option.label}</span>
-              <strong>${money(option.price)}</strong>
-            </label>
-          `).join("")}
-        </div>
-      </div>
-
-      ${renderItemNoteField()}
-    `;
-  }
-
-  if (item.type === "side") {
-    body.innerHTML = `
-      <div class="pos-option-group">
-        <label class="pos-option-label">Selecciona una guarnición</label>
-        <div class="pos-option-list">
-          ${item.sides.map((side, index) => `
-            <label class="pos-option-line">
-              <input type="radio" name="sideOption" value="${side}" ${index === 0 ? "checked" : ""}>
               <span>${side}</span>
               <strong>Incluida</strong>
             </label>
@@ -737,9 +687,7 @@ function confirmSelectedMenuItem() {
         : "Sin borde de queso",
       note
     });
-  }
-
-  if (selectedMenuItem.type === "preparation") {
+  } else if (selectedMenuItem.type === "preparation") {
     const optionIndex = Number(
       document.querySelector(
         'input[name="preparationOption"]:checked'
@@ -757,9 +705,7 @@ function confirmSelectedMenuItem() {
       details: option.label,
       note
     });
-  }
-
-  if (selectedMenuItem.type === "side") {
+  } else if (selectedMenuItem.type === "side") {
     const side = document.querySelector(
       'input[name="sideOption"]:checked'
     )?.value;
