@@ -523,18 +523,26 @@ function renderProductOptions(item) {
   title.textContent = item.name;
 
   if (item.type === "pizza") {
-    const firstSize = Object.keys(item.sizes)[0];
+    const pizzaSizes = Object.keys(item.sizes);
+    const firstSize = pizzaSizes[0];
 
     body.innerHTML = `
       <div class="pos-option-group">
         <label class="pos-option-label">1. Selecciona el tamaño</label>
+
         <div class="pos-option-grid">
-          ${Object.entries(item.sizes).map(([size, price], index) => `
+          ${pizzaSizes.map((size, index) => `
             <label class="pos-option-card">
-              <input type="radio" name="pizzaSize" value="${size}" ${index === 0 ? "checked" : ""}>
+              <input
+                type="radio"
+                name="pizzaSize"
+                value="${index}"
+                ${index === 0 ? "checked" : ""}
+              >
+
               <span>
                 <strong>${size}</strong>
-                <small>${money(price)}</small>
+                <small>${money(item.sizes[size])}</small>
               </span>
             </label>
           `).join("")}
@@ -543,14 +551,95 @@ function renderProductOptions(item) {
 
       <div class="pos-option-group">
         <label class="pos-option-label">2. Borde de queso</label>
+
         <label class="pos-check-row">
           <input id="pizzaCheeseCrust" type="checkbox">
+
           <span>
             <strong>Agregar borde de queso</strong>
-            <small id="cheeseCrustPriceLabel">+${money(cheeseCrustPrices[firstSize])}</small>
+            <small id="cheeseCrustPriceLabel">
+              +${money(cheeseCrustPrices[firstSize])}
+            </small>
           </span>
         </label>
       </div>
+
+      ${renderItemNoteField()}
+    `;
+
+    document
+      .querySelectorAll('input[name="pizzaSize"]')
+      .forEach(input => {
+        input.addEventListener("change", function () {
+          const selectedSize = pizzaSizes[Number(this.value)];
+          const crustPrice = cheeseCrustPrices[selectedSize] || 0;
+          const label = document.getElementById("cheeseCrustPriceLabel");
+
+          if (label) {
+            label.textContent = `+${money(crustPrice)}`;
+          }
+        });
+      });
+  }
+
+  if (item.type === "preparation") {
+    body.innerHTML = `
+      <div class="pos-option-group">
+        <label class="pos-option-label">
+          Selecciona la preparación
+        </label>
+
+        <div class="pos-option-list">
+          ${item.options.map((option, index) => `
+            <label class="pos-option-line">
+              <input
+                type="radio"
+                name="preparationOption"
+                value="${index}"
+                ${index === 0 ? "checked" : ""}
+              >
+
+              <span>${option.label}</span>
+              <strong>${money(option.price)}</strong>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+
+      ${renderItemNoteField()}
+    `;
+  }
+
+  if (item.type === "side") {
+    body.innerHTML = `
+      <div class="pos-option-group">
+        <label class="pos-option-label">
+          Selecciona una guarnición
+        </label>
+
+        <div class="pos-option-list">
+          ${item.sides.map((side, index) => `
+            <label class="pos-option-line">
+              <input
+                type="radio"
+                name="sideOption"
+                value="${side}"
+                ${index === 0 ? "checked" : ""}
+              >
+
+              <span>${side}</span>
+              <strong>Incluida</strong>
+            </label>
+          `).join("")}
+        </div>
+      </div>
+
+      ${renderItemNoteField()}
+    `;
+  }
+
+  confirmButton.onclick = confirmSelectedMenuItem;
+}
 
       ${renderItemNoteField()}
     `;
@@ -621,30 +710,50 @@ function renderItemNoteField() {
 function confirmSelectedMenuItem() {
   if (!selectedMenuItem) return;
 
-  const note = document.getElementById("productItemNote")?.value.trim() || "";
+  const note =
+    document.getElementById("productItemNote")?.value.trim() || "";
 
   if (selectedMenuItem.type === "pizza") {
-    const size = document.querySelector('input[name="pizzaSize"]:checked')?.value;
+    const selectedIndex = Number(
+      document.querySelector(
+        'input[name="pizzaSize"]:checked'
+      )?.value
+    );
+
+    const pizzaSizes = Object.keys(selectedMenuItem.sizes);
+    const size = pizzaSizes[selectedIndex];
+
     if (!size) return;
 
-    const withCheeseCrust = Boolean(document.getElementById("pizzaCheeseCrust")?.checked);
+    const withCheeseCrust = Boolean(
+      document.getElementById("pizzaCheeseCrust")?.checked
+    );
+
     const basePrice = selectedMenuItem.sizes[size];
-    const crustPrice = withCheeseCrust ? cheeseCrustPrices[size] : 0;
+    const crustPrice = withCheeseCrust
+      ? cheeseCrustPrices[size] || 0
+      : 0;
 
     addConfiguredItem({
       menuId: selectedMenuItem.id,
       name: `Pizza ${selectedMenuItem.name} ${size}`,
       price: basePrice + crustPrice,
-      details: withCheeseCrust ? `Borde de queso +${money(crustPrice)}` : "Sin borde de queso",
+      details: withCheeseCrust
+        ? `Borde de queso +${money(crustPrice)}`
+        : "Sin borde de queso",
       note
     });
   }
 
   if (selectedMenuItem.type === "preparation") {
     const optionIndex = Number(
-      document.querySelector('input[name="preparationOption"]:checked')?.value
+      document.querySelector(
+        'input[name="preparationOption"]:checked'
+      )?.value
     );
+
     const option = selectedMenuItem.options[optionIndex];
+
     if (!option) return;
 
     addConfiguredItem({
@@ -657,7 +766,10 @@ function confirmSelectedMenuItem() {
   }
 
   if (selectedMenuItem.type === "side") {
-    const side = document.querySelector('input[name="sideOption"]:checked')?.value;
+    const side = document.querySelector(
+      'input[name="sideOption"]:checked'
+    )?.value;
+
     if (!side) return;
 
     addConfiguredItem({
