@@ -634,12 +634,6 @@ function renderProductOptions(item) {
         </div>
       </div>
 
-      ${renderItemNoteField()}
-    `;
-  }
-
-  confirmButton.onclick = confirmSelectedMenuItem;
-}
 
       ${renderItemNoteField()}
     `;
