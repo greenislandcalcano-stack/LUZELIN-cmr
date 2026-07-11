@@ -1,168 +1,96 @@
-<div class="crm-card">
-
-  <div class="d-flex justify-content-between align-items-center mb-4">
+<div class="crm-card pos-page">
+  <div class="pos-header">
     <div>
-      <h3 class="fw-bold mb-1">POS / Menu</h3>
-      <p class="text-muted mb-0">Selecciona productos y crea órdenes rápido.</p>
+      <h3 class="fw-bold mb-1">POS / Menú</h3>
+      <p class="text-muted mb-0">Selecciona una categoría, personaliza el producto y agrégalo a la orden.</p>
     </div>
 
-    <button class="btn btn-dark" onclick="clearPOSCart()">
+    <button class="btn btn-outline-danger" onclick="clearPOSCart()">
       <i class="bi bi-trash"></i> Limpiar orden
     </button>
   </div>
 
   <div class="row g-4">
-
-    <div class="col-lg-8">
-
-      <h5 class="fw-bold mb-3">Cocina</h5>
-      <div class="row g-3">
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Pizza Personal', 250)">
-            <strong>Pizza Personal</strong>
-            <span>RD$250</span>
-          </button>
+    <div class="col-xl-8">
+      <div class="pos-toolbar">
+        <div class="pos-search-wrap">
+          <i class="bi bi-search"></i>
+          <input
+            id="posSearch"
+            class="form-control"
+            type="search"
+            placeholder="Buscar pizza, pescado, bebida, postre..."
+            autocomplete="off"
+          >
         </div>
 
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Pizza Mediana', 550)">
-            <strong>Pizza Mediana</strong>
-            <span>RD$550</span>
-          </button>
-        </div>
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Pizza Familiar', 850)">
-            <strong>Pizza Familiar</strong>
-            <span>RD$850</span>
-          </button>
-        </div>
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Hamburguesa', 280)">
-            <strong>Hamburguesa</strong>
-            <span>RD$280</span>
-          </button>
-        </div>
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Hot Dog', 180)">
-            <strong>Hot Dog</strong>
-            <span>RD$180</span>
-          </button>
-        </div>
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Papas Fritas', 150)">
-            <strong>Papas Fritas</strong>
-            <span>RD$150</span>
-          </button>
-        </div>
-
+        <div id="posCategoryTabs" class="pos-category-tabs"></div>
       </div>
 
-      <h5 class="fw-bold mt-4 mb-3">Postres</h5>
-      <div class="row g-3">
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Flan', 120)">
-            <strong>Flan</strong>
-            <span>RD$120</span>
-          </button>
-        </div>
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Tres Leches', 180)">
-            <strong>Tres Leches</strong>
-            <span>RD$180</span>
-          </button>
-        </div>
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Bizcocho', 150)">
-            <strong>Bizcocho</strong>
-            <span>RD$150</span>
-          </button>
-        </div>
-
-      </div>
-
-      <h5 class="fw-bold mt-4 mb-3">Bebidas</h5>
-      <div class="row g-3">
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Refresco', 75)">
-            <strong>Refresco</strong>
-            <span>RD$75</span>
-          </button>
-        </div>
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Agua', 50)">
-            <strong>Agua</strong>
-            <span>RD$50</span>
-          </button>
-        </div>
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Jugo Natural', 120)">
-            <strong>Jugo Natural</strong>
-            <span>RD$120</span>
-          </button>
-        </div>
-
-      </div>
-
-      <h5 class="fw-bold mt-4 mb-3">Add-ups</h5>
-      <div class="row g-3">
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Extra Queso', 75)">
-            <strong>Extra Queso</strong>
-            <span>RD$75</span>
-          </button>
-        </div>
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Extra Bacon', 100)">
-            <strong>Extra Bacon</strong>
-            <span>RD$100</span>
-          </button>
-        </div>
-
-        <div class="col-md-4">
-          <button class="pos-item" onclick="addToPOS('Extra Salsa', 50)">
-            <strong>Extra Salsa</strong>
-            <span>RD$50</span>
-          </button>
-        </div>
-
-      </div>
-
+      <div id="posMenuGrid" class="pos-menu-grid"></div>
     </div>
 
-    <div class="col-lg-4">
-      <div class="pos-cart">
-        <h5 class="fw-bold mb-3">Orden actual</h5>
+    <div class="col-xl-4">
+      <aside class="pos-cart">
+        <div class="pos-cart-heading">
+          <div>
+            <span class="pos-cart-eyebrow">Orden activa</span>
+            <h5 id="activeOrderLabel" class="fw-bold mb-0">Takeout</h5>
+          </div>
+          <span id="posCartCount" class="pos-cart-count">0</span>
+        </div>
 
         <div id="posCartItems" class="pos-cart-items">
-          <p class="text-muted">No hay productos seleccionados.</p>
+          <div class="pos-empty-state">
+            <i class="bi bi-basket"></i>
+            <p>No hay productos seleccionados.</p>
+          </div>
         </div>
 
-        <hr>
-
-        <div class="d-flex justify-content-between fs-5 fw-bold">
-          <span>Total</span>
-          <span id="posCartTotal">RD$0</span>
+        <div id="posCartTotal" class="pos-cart-summary">
+          <div class="d-flex justify-content-between">
+            <span>Total</span>
+            <strong>RD$0</strong>
+          </div>
         </div>
 
-        <button class="btn btn-success w-100 mt-3" onclick="completePOSOrder()">
+        <div class="pos-order-note">
+          <label for="orderNote" class="form-label fw-semibold">Nota general para cocina</label>
+          <textarea
+            id="orderNote"
+            class="form-control"
+            rows="2"
+            placeholder="Ej.: sin cebolla, entregar primero las bebidas..."
+          ></textarea>
+        </div>
+
+        <button class="btn btn-success w-100 pos-complete-btn" onclick="completePOSOrder()">
           <i class="bi bi-check-circle"></i> Completar orden
+        </button>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="productOptionsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content pos-modal">
+      <div class="modal-header">
+        <div>
+          <span class="pos-modal-eyebrow">Personalizar producto</span>
+          <h5 id="productOptionsTitle" class="modal-title fw-bold">Producto</h5>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+
+      <div id="productOptionsBody" class="modal-body"></div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+        <button id="confirmProductOptions" type="button" class="btn btn-success">
+          <i class="bi bi-plus-circle"></i> Agregar a la orden
         </button>
       </div>
     </div>
-
   </div>
-
 </div>
